@@ -1,7 +1,10 @@
 -- CREATE DATABASE
 create database instagram;
+
+-- USE DATABASE
 use instagram;
 
+-- CREATE TABLE USERS
 CREATE TABLE Users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -13,11 +16,10 @@ CREATE TABLE Users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- INSERT RECORD IN USERS TABLE 
 INSERT INTO Users (username, email, password, full_name, bio, profile_picture_url) VALUES 
 ('kurhe_39', 'kurheavinash2019@.com', 'ak@123456', 'AVINASH KURHE', 'COMPUTER ENGINEERING..', 'http://example.com/profile.jpg'),
 ('NARESH_SG', 'naresh@.com', 'pass@1234', 'NARESH SHINDE', 'NATURE LOVER', 'http://example.com/profile2.jpg');
-
 INSERT INTO Users (username, email, password, full_name, bio, profile_picture_url) VALUES 
 ('RAHUL_RJ', 'rahulraj@.com', 'pass@5678', 'RAHUL RAJAN', 'PHOTOGRAPHER', 'http://example.com/profile3.jpg'),
 ('MANISHA_PT', 'manisha@.com', 'pass@91011', 'MANISHA PATIL', 'TRAVEL ENTHUSIAST', 'http://example.com/profile4.jpg'),
@@ -48,9 +50,10 @@ INSERT INTO Users (username, email, password, full_name, bio, profile_picture_ur
 ('RAHUL_LS', 'rahul.ls@.com', 'pass@6061', 'RAHUL LOKHANDE', 'IT CONSULTANT', 'http://example.com/profile29.jpg'),
 ('SHEETAL_MP', 'sheetal@.com', 'pass@6263', 'SHEETAL MALI', 'HUMAN RESOURCES MANAGER', 'http://example.com/profile30.jpg');
 
-
+--  SHOW USERS TABLE
 SELECT * FROM users;
 
+-- CREATE TABLE POSTS
 CREATE TABLE Posts (
     post_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
@@ -60,10 +63,10 @@ CREATE TABLE Posts (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
+-- INSERT RECORS IN POSTS TABLE
 INSERT INTO Posts (user_id, image_url, caption) VALUES 
 (1, 'http://example.com/image1.jpg', 'LOVE YOUR SELF'),
 (2, 'http://example.com/image2.jpg', ' NATURE LOVE .');
-
 INSERT INTO Posts (user_id, image_url, caption) VALUES 
 (1, 'http://example.com/image1.jpg', 'LOVE YOUR SELF'),
 (2, 'http://example.com/image2.jpg', 'NATURE LOVE'),
@@ -96,9 +99,10 @@ INSERT INTO Posts (user_id, image_url, caption) VALUES
 (29, 'http://example.com/image29.jpg', 'ARCHITECTURAL WONDERS'),
 (1, 'http://example.com/image30.jpg', 'FLYING HIGH');
 
+-- SHOW POSTS TABLE
 select* from posts;
 
-
+-- CREATE TABLE COMMENTS
 CREATE TABLE Comments (
     comment_id INT PRIMARY KEY AUTO_INCREMENT,
     post_id INT,
@@ -109,10 +113,10 @@ CREATE TABLE Comments (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
+-- INSERT RECORD IN COMMENTS
 INSERT INTO Comments (post_id, user_id, content) VALUES 
 (1, 2, 'Nice picture!'),
 (2, 1, 'Thanks!');
-  
  INSERT INTO Comments (post_id, user_id, content) VALUES 
 (2, 4, 'Amazing view ...!'),
 (4, 3, 'Love it!'),
@@ -147,8 +151,10 @@ INSERT INTO Comments (post_id, user_id, content) VALUES
 (5, 7, 'Breathtaking!'),
 (6, 8, 'Enchanting!');
  
+ -- SHOW COMMENTS TABLE
  select* from Comments;
  
+ -- CREATE TABLE LIKES
  CREATE TABLE Likes (
     like_id INT PRIMARY KEY AUTO_INCREMENT,
     post_id INT,
@@ -158,10 +164,10 @@ INSERT INTO Comments (post_id, user_id, content) VALUES
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
+-- INSERT RECORD IN LIKES TABLE
 INSERT INTO Likes (post_id, user_id) VALUES 
 (1, 2),
 (2, 1);
-select * from Likes;
 INSERT INTO Likes (post_id, user_id) VALUES 
 (1, 4),
 (11, 3),
@@ -191,6 +197,10 @@ INSERT INTO Likes (post_id, user_id) VALUES
 (9, 11),
 (10, 12);
 
+-- SHOW TABLE LIKES
+select * from Likes;
+
+-- CREATE TABLE FOLLOWERS
 CREATE TABLE Followers (
     follower_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
@@ -199,18 +209,11 @@ CREATE TABLE Followers (
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (follower_user_id) REFERENCES Users(user_id)
 );
-SELECT  Users.username,count(follower_id) 
-from Users 
-join Followers 
-on  Users.user_id=Followers.user_id  
-group by username  
-having count(follower_id)<=2
- order by count(follower_id) desc ;
 
+-- INSERT RECORD IN FOLLOWERS TABLE
 INSERT INTO Followers (user_id, follower_user_id) VALUES 
 (1, 2),
 (2, 1);
-
 INSERT INTO Followers (user_id, follower_user_id) VALUES 
 (1, 2),
 (2, 3),
@@ -253,8 +256,10 @@ INSERT INTO Followers (user_id, follower_user_id) VALUES
 (9, 11),
 (10, 12);
 
+-- SHOW FOLLOWERS TABLE
 select* from Followers;
 
+-- CREATE TABLE DIRECT MESSAGE
 CREATE TABLE DirectMessages (
     message_id INT PRIMARY KEY AUTO_INCREMENT,
     sender_id INT,
@@ -265,10 +270,10 @@ CREATE TABLE DirectMessages (
     FOREIGN KEY (receiver_id) REFERENCES Users(user_id)
 );
 
+-- INSERT RECORD IN DIRECTMESSAGE TABLE
 INSERT INTO DirectMessages (sender_id, receiver_id, message_text) VALUES 
 (1, 2, 'Hey ! How are you?'),
 (2, 1, 'Hey ! I am good, how about you?');
-
 INSERT INTO DirectMessages (sender_id, receiver_id, message_text) VALUES 
 (1, 2, 'Hey there!'),
 (2, 3, 'How are you?'),
@@ -310,36 +315,26 @@ INSERT INTO DirectMessages (sender_id, receiver_id, message_text) VALUES
 (9, 8, 'Good day!'),
 (10, 9, 'What\'s happening with you?');
 
-
+-- SHOW DIRECT MESSAGE TABLE
 select* from DirectMessages;
-select * from Users;
-SELECT * FROM Posts WHERE  user_id=  1;
-delete from posts where post_id=3;   
 
 
-
-
-
-
-select DirectMessages.message_text,Users.user_id 
-from DirectMessages
-join Users 
-on DirectMessages.sender_id=Users.user_id where user_id =1;
-
-select Users.username,count(post_id) as NO_OF_POST from Users left join Posts on Users.user_id=Posts.user_id group by username;
-
-select * from LIkes;
-select post_id ,count(user_id)from Likes group by post_id;
-select count(user_id)from Likes where post_id=1;
-
-select users.user_id,users.username ,count(post_id) as NO_OF_POST 
-from Users 
-join posts on users.user_id=posts.user_id group by user_id;
-
+-- STORED PROCEDURE TO INSERT USER DETAIL
 call add_user('micky321','vip@134','vip12345','vikas i patil','  ','http://example.com/profile3.jpg');
+
+-- STORED PROCEDURE TO DELETE SPECIFIC USER USIND ID
 call delete_using_id(36);
+
+-- STORED PROCEDURE TO SHOW TOTAL LIKES OF SPECIFIC POST USING POST_ID
 call show_total_likes_using_post_id(1);
+
+-- SELECT ALL_USER WISE POST COUNT
 call user_wise_post_count();
 
+-- SELECT ALL USERS FOLLOWER COUNT
+call all_users_follower_count();
+
+-- SELECT SPECIFIC USER FOLLOWER COUNT
+call specific_user_follower_count_using_user_id(2);
 
 
