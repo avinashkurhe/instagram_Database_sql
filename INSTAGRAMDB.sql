@@ -1,3 +1,4 @@
+-- CREATE DATABASE
 create database instagram;
 use instagram;
 
